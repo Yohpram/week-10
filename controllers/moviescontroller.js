@@ -11,8 +11,8 @@ class MoviesController {
   }
 
   static async createMovie(req, res) {
-    const {  title, genre, year, photos } = req.body;
-    const movie = {  title, genre, year, photos };
+    const {  title, genres, year, photos } = req.body;
+    const movie = {  title, genres, year, photos };
     try {
       const id = await MoviesModel.createMovie(movie);
       res.status(201).json({ id });
@@ -23,8 +23,8 @@ class MoviesController {
 
   static async updateMovie(req, res) {
     const { id } = req.params;
-    const { title, genre, year, photos } = req.body;
-    const updatedMovie = { title, genre, year, photos };
+    const { title, genres, year, photos } = req.body;
+    const updatedMovie = { title, genres, year, photos };
     try {
       const success = await MoviesModel.updateMovie(id, updatedMovie);
       if (success) {
