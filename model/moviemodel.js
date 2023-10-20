@@ -25,9 +25,9 @@ class MoviesModel {
     
       static async updateMovie(id, updatedMovie) {
         const { title, genre, year, photo } = updatedMovie;
-        const query = 'UPDATE public.movies SET title = $1, genre = $2, year = $3, photo = $4 WHERE id = $5;';
+        const query = 'UPDATE public.movies SET title = $1, genres = $2, year = $3, photos = $4 WHERE id = $5;';
         try {
-          await pool.query(query, [title, genre, year, photo, id]);
+          await pool.query(query, [title, genres, year, photos, id]);
           return true;
         } catch (error) {
           throw error;
