@@ -24,7 +24,7 @@ class MoviesModel {
       }
     
       static async updateMovie(id, updatedMovie) {
-        const { title, genres, year, photo } = updatedMovie;
+        const { title, genres, year, photos } = updatedMovie;
         const query = 'UPDATE public.movies SET title = $1, genres = $2, year = $3, photos = $4 WHERE id = $5;';
         try {
           await pool.query(query, [title, genres, year, photos, id]);
