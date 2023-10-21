@@ -1,30 +1,36 @@
 const MoviesModel = require('../model/moviemodel');
 
 class MoviesController {
+
   static async getAllMovies(req, res) {
     try {
-      const movies = await MoviesModel.getAllMovies();
+      const movies = await MoviesModel.getAllMovies(); 
       res.json(movies);
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
 
-  static async createMovie(req, res) {
-    const {  title, genres, year, photos } = req.body;
-    const movie = {  title, genres, year, photos };
-    try {
-      const id = await MoviesModel.createMovie(movie);
-      res.status(201).json({ id });
-    } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
+  static addPost(req, res){
+    const {id, title, genres, year, photos } = req.body; 
+    const objmovies = { 
+       id, title, genres, year, photos
+  }
+    MoviesModel.addPost( objmovies, (err, movie) => {
+        if(err){
+            res.send(err);
+        }
+        else{
+            res.redirect("/movies");
+        }
+    });
+
   }
 
   static async updateMovie(req, res) {
     const { id } = req.params;
-    const { title, genres, year, photos } = req.body;
-    const updatedMovie = { title, genres, year, photos };
+    const {  title, genres, year, photos } = req.body;
+    const updatedMovie = { id, title, genres, year, photos };
     try {
       const success = await MoviesModel.updateMovie(id, updatedMovie);
       if (success) {
