@@ -1,67 +1,40 @@
-const MoviesModel = require('../model/moviemodel');
+const UserModel = require('../model/usermodel');
 
-class MoviesController {
+class UserController {
 
-  static async getAllMovies(req, res) {
+  static async getAllUser(req, res) {
     try {
-      const movies = await MoviesModel.getAllMovies(); 
-      res.json(movies);
+      const users = await UserModel.getAllUser(); 
+      res.json(users);
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
     }
   }
-
-  static addPost(req, res){
-<<<<<<< HEAD
-    const { title, genres, year, photo } = req.body; 
-    const objmovies = { 
-        title, genres, year, photo
-=======
-    const {id, title, genres, year, photos } = req.body; 
-    const objmovies = { 
-       id, title, genres, year, photos
->>>>>>> 6ef50dfa793b8b27f7e3c0c861bf1b51d518b480
+// masih error
+  static adduser(req, res){
+    const { email, gender, password, role } = req.body; 
+    const objUser = { 
+        email, gender, password, role
   }
-    MoviesModel.addPost( objmovies, (err, movie) => {
+    UserModel.adduser( objUser, (err, user) => {
         if(err){
             res.send(err);
         }
         else{
-            res.redirect("/movies");
+            res.redirect("/user");
         }
     });
 
   }
 
-  static async updateMovie(req, res) {
+  static async deleteUser(req, res) {
     const { id } = req.params;
-<<<<<<< HEAD
-    const {  title, genres, year, photo } = req.body;
-    const updatedMovie = { id, title, genres, year, photo };
-=======
-    const {  title, genres, year, photos } = req.body;
-    const updatedMovie = { id, title, genres, year, photos };
->>>>>>> 6ef50dfa793b8b27f7e3c0c861bf1b51d518b480
     try {
-      const success = await MoviesModel.updateMovie(id, updatedMovie);
+      const success = await UserModel.deleteMovie(id);
       if (success) {
         res.status(204).end();
       } else {
-        res.status(404).json({ error: 'Movie not found' });
-      }
-    } catch (error) {
-      res.status(500).json({ error: 'Internal Server Error' });
-    }
-  }
-
-  static async deleteMovie(req, res) {
-    const { id } = req.params;
-    try {
-      const success = await MoviesModel.deleteMovie(id);
-      if (success) {
-        res.status(204).end();
-      } else {
-        res.status(404).json({ error: 'Movie not found' });
+        res.status(404).json({ error: 'User not found' });
       }
     } catch (error) {
       res.status(500).json({ error: 'Internal Server Error' });
@@ -69,4 +42,4 @@ class MoviesController {
   }
 }
 
-module.exports = MoviesController;
+module.exports = UserController;
